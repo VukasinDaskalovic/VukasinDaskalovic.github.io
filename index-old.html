@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daskalović</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            /* background-color: #121212; */
+             background-color: #00557d;;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        .header a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+        .header a:hover {
+            color: #00557d;
+            background-color: white;
+           
+        }
+        .title {
+            font-size: 3em;
+            font-weight: 700;
+            line-height: 1.2;
+            text-transform: uppercase;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1em;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            margin-top: 30px;
+            font-size: 0.8em;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            left: 50%;
+            margin-left: -85px;
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5em;
+            }
+            .header {
+                font-size: 0.8em;
+            }
+            .subtitle {
+                font-size: 0.9em;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info {
+                display: none;
+            }
+            .header {
+                flex-direction: column;
+            }
+            .title {
+                font-size: 2em;
+            }
+            .subtitle {
+                font-size: 0.85em;
+                padding: 0 10px;
+            }
+            .footer {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header with links -->
+    <div class="header">
+        <div class="info">vukas.in</div>
+        <div>
+            <a href="https://www.linkedin.com/in/vukasindaskalovic/" target="_blank" style="border: 1px solid #ffffff; padding: 5px 10px; border-radius: 20px;">LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- Main title and description -->
+    <div class="title">Vukašin Daskalović</div>
+    <div class="subtitle">
+        I am a seasoned Delivery Manager with a proven track record of successfully spearheading B2B and B2C web and mobile development projects across diverse sectors including oil & gas, air navigation, retail, real estate, and food industries. With a client portfolio spanning Switzerland, Germany, Austria, UK, US, and UAE, I bring extensive expertise in orchestrating end-to-end project lifecycles to fruition. My robust analytical prowess and adept problem-solving skills are rooted in my formal engineering education and hands-on development experience. Throughout my career, I have garnered acclaim for my adeptness in team leadership and organizational acumen, consistently delivering excellence in project execution.
+    </div>
+
+    <!-- Footer at the bottom -->
+    <div class="footer">© 2025 | Vukašin Daskalović</div>
+</div>
+
+</body>
+</html>
