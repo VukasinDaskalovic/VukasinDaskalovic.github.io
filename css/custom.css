@@ -11,3 +11,8 @@
 .mil-icon-box .mil-service-icon {
     padding: 25px;
 }
+
+/* Fix swiper pagination color */
+.swiper-pagination-bullet-active {
+    background-color: rgb(76, 175, 80) !important;
+}

@@ -9,7 +9,7 @@ p.s. I am available for Freelance hire (UI design, web development). email: mill
 
 ------------------------------------------- */
 
-$(function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     "use strict";
 
@@ -29,7 +29,7 @@ $(function () {
     // const bodyClassPlugin = new SwupBodyClassPlugin({
     //     prefix: '.mil-fw-page'
     // });
-    
+
 
     /***************************
 
@@ -67,7 +67,7 @@ $(function () {
         duration: 0.4,
         height: 0,
         onComplete: function () {
-            $('html').removeClass('is-animating');
+            document.documentElement.classList.remove('is-animating');
         }
     });
     /***************************
@@ -88,23 +88,34 @@ $(function () {
 
     ***************************/
     var scene = document.getElementById('scene');
-    var parallaxInstance = new Parallax(scene, {
-        limitY: 15,
-    });
+    if (scene) {
+        var parallaxInstance = new Parallax(scene, {
+            limitY: 15,
+        });
+    }
     /***************************
 
     anchor scroll
 
     ***************************/
-    $(document).on('click', 'a[href^="#"]', function (event) {
-        event.preventDefault();
+    document.addEventListener('click', function (event) {
+        if (event.target.matches('a[href^="#"]') || event.target.closest('a[href^="#"]')) {
+            const link = event.target.matches('a[href^="#"]') ? event.target : event.target.closest('a[href^="#"]');
+            event.preventDefault();
+            const targetId = link.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                const offset = 90;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - offset;
 
-        var target = $($.attr(this, 'href'));
-        var offset = 90;
-
-        $('html, body').animate({
-            scrollTop: target.offset().top - offset
-        }, 400);
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
     });
     /***************************
 
@@ -113,20 +124,22 @@ $(function () {
     ***************************/
     const btt = document.querySelector(".mil-back-to-top .mil-link");
 
-    gsap.set(btt, {
-        opacity: .5,
-    });
+    if (btt) {
+        gsap.set(btt, {
+            opacity: .5,
+        });
 
-    gsap.to(btt, {
-        opacity: 1,
-        ease: 'sine',
-        scrollTrigger: {
-            trigger: "body",
-            start: "top -20%",
-            end: "top -20%",
-            toggleActions: "play none reverse none"
-        }
-    });
+        gsap.to(btt, {
+            opacity: 1,
+            ease: 'sine',
+            scrollTrigger: {
+                trigger: "body",
+                start: "top -20%",
+                end: "top -20%",
+                toggleActions: "play none reverse none"
+            }
+        });
+    }
     /***************************
 
     scroll animations
@@ -153,7 +166,7 @@ $(function () {
     const rotate = document.querySelectorAll(".mil-rotate");
 
     rotate.forEach((section) => {
-        var value = $(section).data("value");
+        var value = section.dataset.value;
         gsap.fromTo(section, {
             ease: 'sine',
             rotate: 0,
@@ -176,7 +189,7 @@ $(function () {
     const progGo = document.querySelectorAll(".mil-circular-progress");
 
     progGo.forEach((section) => {
-        var value = $(section).data("value");
+        var value = section.dataset.value;
         gsap.fromTo(section, {
             "--p": '0',
             ease: 'sine',
@@ -195,15 +208,15 @@ $(function () {
     counter
 
     ***************************/
-    const number = $(".mil-counter");
-    number.each(function (index, element) {
-        var count = $(this),
-            zero = {
-                val: 0
-            },
-            num = count.data("number"),
-            split = (num + "").split("."), // to cover for instances of decimals
-            decimals = split.length > 1 ? split[1].length : 0;
+    const number = document.querySelectorAll(".mil-counter");
+    number.forEach(function (element) {
+        var count = element;
+        var zero = {
+            val: 0
+        };
+        var num = parseFloat(count.dataset.number);
+        var split = (num + "").split("."); // to cover for instances of decimals
+        var decimals = split.length > 1 ? split[1].length : 0;
 
         gsap.to(zero, {
             val: num,
@@ -213,7 +226,7 @@ $(function () {
                 toggleActions: 'play none none reverse',
             },
             onUpdate: function () {
-                count.text(zero.val.toFixed(decimals));
+                count.textContent = zero.val.toFixed(decimals);
             }
         });
     });
@@ -226,7 +239,7 @@ $(function () {
     const width = document.querySelectorAll(".mil-bar");
 
     width.forEach((section) => {
-        var value = $(section).data("value");
+        var value = section.dataset.value;
         gsap.fromTo(section, {
             width: 0,
             duration: 5000,
@@ -246,10 +259,15 @@ $(function () {
     navigation
 
     ***************************/
-    $(".mil-menu-btn").on("click", function () {
-        $(this).toggleClass('mil-active');
-        $('.mil-navigation').toggleClass('mil-active');
-    });
+    const menuBtn = document.querySelector(".mil-menu-btn");
+    const navigation = document.querySelector('.mil-navigation');
+    
+    if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+            this.classList.toggle('mil-active');
+            if (navigation) navigation.classList.toggle('mil-active');
+        });
+    }
 
     /***************************
 
@@ -374,7 +392,10 @@ $(function () {
     ----------------------------------------------------------*/
     document.addEventListener("swup:contentReplaced", function () {
 
-        $(".mil-navigation , .mil-menu-btn").removeClass('mil-active');
+        const nav = document.querySelector('.mil-navigation');
+        const mBtn = document.querySelector(".mil-menu-btn");
+        if(nav) nav.classList.remove('mil-active');
+        if(mBtn) mBtn.classList.remove('mil-active');
 
         window.scrollTo({
             top: 0,
@@ -389,20 +410,22 @@ $(function () {
         ***************************/
         const btt = document.querySelector(".mil-back-to-top .mil-link");
 
-        gsap.set(btt, {
-            opacity: .5,
-        });
+        if (btt) {
+            gsap.set(btt, {
+                opacity: .5,
+            });
 
-        gsap.to(btt, {
-            opacity: 1,
-            ease: 'sine',
-            scrollTrigger: {
-                trigger: "body",
-                start: "top -20%",
-                end: "top -20%",
-                toggleActions: "play none reverse none"
-            }
-        });
+            gsap.to(btt, {
+                opacity: 1,
+                ease: 'sine',
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top -20%",
+                    end: "top -20%",
+                    toggleActions: "play none reverse none"
+                }
+            });
+        }
         /***************************
 
         scroll animations
@@ -429,7 +452,7 @@ $(function () {
         const rotate = document.querySelectorAll(".mil-rotate");
 
         rotate.forEach((section) => {
-            var value = $(section).data("value");
+            var value = section.dataset.value;
             gsap.fromTo(section, {
                 ease: 'sine',
                 rotate: 0,
@@ -452,7 +475,7 @@ $(function () {
         const progGo = document.querySelectorAll(".mil-circular-progress");
 
         progGo.forEach((section) => {
-            var value = $(section).data("value");
+            var value = section.dataset.value;
             gsap.fromTo(section, {
                 "--p": '0',
                 ease: 'sine',
@@ -471,15 +494,15 @@ $(function () {
         counter
 
         ***************************/
-        const number = $(".mil-counter");
-        number.each(function (index, element) {
-            var count = $(this),
-                zero = {
-                    val: 0
-                },
-                num = count.data("number"),
-                split = (num + "").split("."), // to cover for instances of decimals
-                decimals = split.length > 1 ? split[1].length : 0;
+        const number = document.querySelectorAll(".mil-counter");
+        number.forEach(function (element) {
+            var count = element;
+            var zero = {
+                val: 0
+            };
+            var num = parseFloat(count.dataset.number);
+            var split = (num + "").split("."); // to cover for instances of decimals
+            var decimals = split.length > 1 ? split[1].length : 0;
 
             gsap.to(zero, {
                 val: num,
@@ -489,7 +512,7 @@ $(function () {
                     toggleActions: 'play none none reverse',
                 },
                 onUpdate: function () {
-                    count.text(zero.val.toFixed(decimals));
+                    count.textContent = zero.val.toFixed(decimals);
                 }
             });
         });
@@ -502,7 +525,7 @@ $(function () {
         const width = document.querySelectorAll(".mil-bar");
 
         width.forEach((section) => {
-            var value = $(section).data("value");
+            var value = section.dataset.value;
             gsap.fromTo(section, {
                 width: 0,
                 duration: 5000,
